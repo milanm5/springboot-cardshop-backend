@@ -1,0 +1,81 @@
+version: '3.7'
+
+services:
+  customer-service:
+    image: rzk/customer-service:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - shop-network
+    depends_on:
+      - naming-server
+    environment: 
+      - managment.zipkin.tracing.endpoint=http://zipkin-server:9411/api/v2/spans
+
+  card-service:
+    image: rzk/card-service:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8081:8081"
+    networks:
+      - shop-network
+    depends_on:
+      - naming-server
+    environment:
+      - managment.zipkin.tracing.endpoint=http://zipkin-server:9411/api/v2/spans
+
+  order-service:
+    image: rzk/order-service:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8082:8082"
+    networks:
+      - shop-network
+    depends_on:
+      - naming-server
+    environment:
+      - managment.zipkin.tracing.endpoint=http://zipkin-server:9411/api/v2/spans
+
+  shop-service:
+    image: rzk/shop-service:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8083:8083"
+    networks:
+      - shop-network
+    depends_on:
+      - naming-server
+    environment:
+      - managment.zipkin.tracing.endpoint=http://zipkin-server:9411/api/v2/spans
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks: 
+      - shop-network
+  
+  naming-server:
+    image: rzk/naming-server:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - shop-network
+
+  api-gateway:
+    image: rzk/api-gateway:0.0.1
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - shop-network
+    depends_on:
+      - naming-server
+    environment:
+      - managment.zipkin.tracing.endpoint=http://zipkin-server:9411/api/v2/spans
+
+networks:
+  shop-network:

@@ -1,0 +1,6 @@
+https://hub.docker.com/repository/docker/milanm23/shop-service
+https://hub.docker.com/repository/docker/milanm23/order-service
+https://hub.docker.com/repository/docker/milanm23/customer-service
+https://hub.docker.com/repository/docker/milanm23/card-service
+https://hub.docker.com/repository/docker/milanm23/naming-server
+https://hub.docker.com/repository/docker/milanm23/api-gateway
